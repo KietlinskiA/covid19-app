@@ -30,14 +30,10 @@ public class MainService {
         init();
     }
 
-    public List<MedicalTest> getMedicalTests() {
-        return medicalTestRepository.findAll();
-    }
-
     private void init() {
         medicalTestRepository.deleteAll();
         List<TypeOfMedicalTest> typeOfMedicalTestList = typeOfMedicalTestRepository.findAll();
-        MedicalTest medicalTest1 = new MedicalTest(typeOfMedicalTestList.get(2), LocalDate.now(), LocalDate.now(), "TRUE", "Kowalski");
+        MedicalTest medicalTest1 = new MedicalTest(typeOfMedicalTestList.get(2),LocalDate.now(),LocalDate.now(),"TRUE", "Kowalski");
         MedicalTest medicalTest2 = new MedicalTest(typeOfMedicalTestList.get(0),LocalDate.now(),LocalDate.now(),"FALSE","Kot");
         medicalTestRepository.save(medicalTest1);
         medicalTestRepository.save(medicalTest2);
@@ -56,9 +52,8 @@ public class MainService {
                 "2222"));
     }
 
-    public MedicalTest getMedicalTestById(String id) {
-        Optional<MedicalTest> medicalTest = medicalTestRepository.findById(id);
-        return medicalTest.orElseGet(MedicalTest::new);
+    public Patient getPatient(String pesel) {
+        return patientList.stream().filter(patient -> patient.getPesel().equals(pesel)).findFirst()
+                .orElseGet(Patient::new);
     }
-
 }
